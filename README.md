@@ -8,27 +8,47 @@ codes (including examples) for simulating time series and
 reconstructing the connectivity of different models of network 
 dynamical systems. The codes we provide include:
 
-ARNI_NatComm. 
-├──Data 
-   ├──connectivity.dat 
-   ├──data.dat
-   ├──frequencies.dat 
-   ├──ts_param.dat
+ARNI_NatComm
+
+├──Data
+
+├──────connectivity.dat
+   
+├──────data.dat
+
+├──────frequencies.dat
+
+├──────ts_param.dat
+
 ├──Functions
-   ├──basis_expansion.m 
-   ├──reconstruct.m
-   ├──simulate.m
-   ├──topology.m 
+
+├──────basis_expansion.m
+
+├──────reconstruct.m
+
+├──────simulate.m
+
+├──────topology.m 
+
 ├──Html_Output
+
 ├──Models
-   ├──kuramoto1.m    
-   ├──kuramoto2.m 
-   ├──michaelis_menten.m   
-   ├──roessler.m
-├──example1.m. 
-├──example2.m. 
-├──example3.m. 
-├──example4.m. 
+
+├──────kuramoto1.m    
+   
+├──────kuramoto2.m 
+   
+├──────michaelis_menten.m   
+   
+├──────roessler.m
+
+├──example1.m 
+
+├──example2.m 
+
+├──example3.m 
+
+├──example4.m 
 
 ### 1.1 Data
 
