@@ -1,0 +1,352 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>example2</title><meta name="generator" content="MATLAB 8.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-06-06"><meta name="DC.source" content="example2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">% example2.m generates different time series for two different dynamical</span>
+<span class="comment">% systems under different types of coupling functions, ($$h(x_j)$$ and $$h(x_i,x_j)$$)</span>
+<span class="comment">% starting from different intial conditions and reconstructs the connectivity</span>
+<span class="comment">% for a selected unit. Increasing the number of different time series leads</span>
+<span class="comment">% to better results. Bivariate coupling functions are only correctly</span>
+<span class="comment">% represented by bivariate coupling functions. Analogously, univariate</span>
+<span class="comment">% functions are only correctly represented by univariate basis functions.</span>
+<span class="comment">%</span>
+<span class="comment">% Parameters</span>
+<span class="comment">% ------------------</span>
+<span class="comment">% MODEL: Dynamical model on network units. Currently, only kuramoto1,</span>
+<span class="comment">%        kuramoto2, michaelis_menten and roessler are supported. For</span>
+<span class="comment">%        detailed information about the models, please check methods</span>
+<span class="comment">%        section in the main manuscript.</span>
+<span class="comment">% N:     Network size.</span>
+<span class="comment">% NI:    Number of incoming connections per unit.</span>
+<span class="comment">% S:     Number of different time series.</span>
+<span class="comment">% M:     Number of time points per time series.</span>
+<span class="comment">% NODE:  Unit upon the reconstruction takes place.</span>
+<span class="comment">% BASIS: Type of basis employed. Currently, polynomial, polynomial_diff,</span>
+<span class="comment">%        power_series, fourier, fourier_diff and RBF are supported. For</span>
+<span class="comment">%        more detailed information, please see 'Functions/basis_expansion.m'</span>
+<span class="comment">%        and Table I in the main manuscript.</span>
+<span class="comment">% ORDER: Number of bases in the expansion.</span>
+<span class="comment">%</span>
+<span class="comment">% Input type</span>
+<span class="comment">% ------------------</span>
+<span class="comment">% MODEL: string</span>
+<span class="comment">% N:     integer</span>
+<span class="comment">% NI:    integer (NI&lt;N)</span>
+<span class="comment">% S:     integer</span>
+<span class="comment">% M:     integer</span>
+<span class="comment">% NODE:  integer</span>
+<span class="comment">% BASIS: string</span>
+<span class="comment">% ORDER: integer</span>
+<span class="comment">%</span>
+<span class="comment">% Output</span>
+<span class="comment">% ------------------</span>
+<span class="comment">% Figures showing the evolution of fitting costs versus the number of inferred</span>
+<span class="comment">% interactions using different bases for models kuramoto2 and</span>
+<span class="comment">% michaelis_menten.</span>
+<span class="comment">%</span>
+<span class="comment">% Accompanying material to "Model-free inference of direct interactions</span>
+<span class="comment">% from nonlinear collective dynamics".</span>
+<span class="comment">%</span>
+<span class="comment">% Author: Jose Casadiego</span>
+<span class="comment">% Date:   May 2017</span>
+
+close <span class="string">all</span>;
+addpath(<span class="string">'Models/'</span>,<span class="string">'Functions/'</span>)
+
+MODEL={<span class="string">'kuramoto1'</span>,<span class="string">'kuramoto2'</span>,<span class="string">'michaelis_menten'</span>,<span class="string">'roessler'</span>};
+BASIS={<span class="string">'polynomial'</span>,<span class="string">'polynomial_diff'</span>,<span class="string">'fourier'</span>,<span class="string">'fourier_diff'</span>,<span class="string">'power_series'</span>,<span class="string">'RBF'</span>};
+NAMES={<span class="string">'Polynomial'</span>,<span class="string">'Polynomial Diff'</span>,<span class="string">'Fourier'</span>,<span class="string">'Fourier Diff'</span>,<span class="string">'Power Series'</span>,<span class="string">'Radial Basis Function'</span>};
+
+N=25;
+NI=4;
+S=30;
+M=10;
+NODE=15;
+ORDER=6;
+
+simulate(MODEL{2},N,NI,S,M);
+
+<span class="comment">% This make take several minutes</span>
+figure(<span class="string">'Name'</span>,[<span class="string">'Reconstruction with different basis for '</span>, MODEL{2}]);
+<span class="keyword">for</span> i=1:length(BASIS)
+    [list,cost,FPR,TPR,AUC]=reconstruct(MODEL{2},NODE,BASIS{i},ORDER);
+    subplot(2,3,i);
+    plot(cost,<span class="string">'-o'</span>,<span class="string">'LineWidth'</span>,2.5,<span class="string">'Color'</span>,[0,0.7,0.9],<span class="string">'MarkerFaceColor'</span>,[0,0.7,0.9]);
+    title({[<span class="string">'Fitting Costs: '</span>,NAMES{i}],[<span class="string">'AUC='</span>,num2str(AUC)]});
+    xlabel(<span class="string">'# Inferred Interaction'</span>);
+    ylabel(<span class="string">'Cost'</span>);
+<span class="keyword">end</span>
+set(gcf,<span class="string">'Position'</span>,[0 0 1000 500])
+
+simulate(MODEL{3},N,NI,S,M);
+
+<span class="comment">% This make take several minutes</span>
+figure(<span class="string">'Name'</span>,[<span class="string">'Reconstruction with different basis for '</span>, MODEL{3}]);
+<span class="keyword">for</span> i=1:length(BASIS)
+    [list,cost,FPR,TPR,AUC]=reconstruct(MODEL{3},NODE,BASIS{i},ORDER);
+    subplot(2,3,i);
+    plot(cost,<span class="string">'-o'</span>,<span class="string">'LineWidth'</span>,2.5,<span class="string">'Color'</span>,[0,0.7,0.9],<span class="string">'MarkerFaceColor'</span>,[0,0.7,0.9]);
+    title({[<span class="string">'Fitting Costs: '</span>,NAMES{i}],[<span class="string">'AUC='</span>,num2str(AUC)]});
+    xlabel(<span class="string">'# Inferred Interactions'</span>);
+    ylabel(<span class="string">'Cost'</span>);
+<span class="keyword">end</span>
+set(gcf,<span class="string">'Position'</span>,[0 0 1000 500])
+</pre><pre class="codeoutput">Creating network structure...
+Simulating time series...
+Simulation finished!
+Initiating reconstruction...
+Reading data...
+Estimating time derivatives and constructing input matrices...
+Performing ARNI...
+Reconstruction has finished!
+Quality of reconstruction:
+    0.5476
+
+Initiating reconstruction...
+Reading data...
+Estimating time derivatives and constructing input matrices...
+Performing ARNI...
+Reconstruction has finished!
+Quality of reconstruction:
+     1
+
+Initiating reconstruction...
+Reading data...
+Estimating time derivatives and constructing input matrices...
+Performing ARNI...
+Reconstruction has finished!
+Quality of reconstruction:
+    0.5000
+
+Initiating reconstruction...
+Reading data...
+Estimating time derivatives and constructing input matrices...
+Performing ARNI...
+Reconstruction has finished!
+Quality of reconstruction:
+     1
+
+Initiating reconstruction...
+Reading data...
+Estimating time derivatives and constructing input matrices...
+Performing ARNI...
+Reconstruction has finished!
+Quality of reconstruction:
+     1
+
+Initiating reconstruction...
+Reading data...
+Estimating time derivatives and constructing input matrices...
+Performing ARNI...
+Reconstruction has finished!
+Quality of reconstruction:
+    0.9643
+
+Creating network structure...
+Simulating time series...
+Simulation finished!
+Initiating reconstruction...
+Reading data...
+Estimating time derivatives and constructing input matrices...
+Performing ARNI...
+Reconstruction has finished!
+Quality of reconstruction:
+     1
+
+Initiating reconstruction...
+Reading data...
+Estimating time derivatives and constructing input matrices...
+Performing ARNI...
+Reconstruction has finished!
+Quality of reconstruction:
+    0.5000
+
+Initiating reconstruction...
+Reading data...
+Estimating time derivatives and constructing input matrices...
+Performing ARNI...
+Reconstruction has finished!
+Quality of reconstruction:
+    0.9600
+
+Initiating reconstruction...
+Reading data...
+Estimating time derivatives and constructing input matrices...
+Performing ARNI...
+Reconstruction has finished!
+Quality of reconstruction:
+    0.5500
+
+Initiating reconstruction...
+Reading data...
+Estimating time derivatives and constructing input matrices...
+Performing ARNI...
+Reconstruction has finished!
+Quality of reconstruction:
+    0.6650
+
+Initiating reconstruction...
+Reading data...
+Estimating time derivatives and constructing input matrices...
+Performing ARNI...
+Reconstruction has finished!
+Quality of reconstruction:
+     1
+
+</pre><img vspace="5" hspace="5" src="example2_01.png" alt=""> <img vspace="5" hspace="5" src="example2_02.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2012b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+% example2.m generates different time series for two different dynamical
+% systems under different types of coupling functions, ($$h(x_j)$$ and $$h(x_i,x_j)$$)
+% starting from different intial conditions and reconstructs the connectivity 
+% for a selected unit. Increasing the number of different time series leads
+% to better results. Bivariate coupling functions are only correctly
+% represented by bivariate coupling functions. Analogously, univariate
+% functions are only correctly represented by univariate basis functions.
+% 
+% Parameters
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% MODEL: Dynamical model on network units. Currently, only kuramoto1,
+%        kuramoto2, michaelis_menten and roessler are supported. For
+%        detailed information about the models, please check methods
+%        section in the main manuscript.
+% N:     Network size.
+% NI:    Number of incoming connections per unit.
+% S:     Number of different time series.
+% M:     Number of time points per time series.
+% NODE:  Unit upon the reconstruction takes place.
+% BASIS: Type of basis employed. Currently, polynomial, polynomial_diff,
+%        power_series, fourier, fourier_diff and RBF are supported. For
+%        more detailed information, please see 'Functions/basis_expansion.m'
+%        and Table I in the main manuscript.
+% ORDER: Number of bases in the expansion.
+%
+% Input type
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% MODEL: string
+% N:     integer
+% NI:    integer (NI<N)
+% S:     integer
+% M:     integer
+% NODE:  integer
+% BASIS: string
+% ORDER: integer
+%
+% Output
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% Figures showing the evolution of fitting costs versus the number of inferred
+% interactions using different bases for models kuramoto2 and
+% michaelis_menten.
+%
+% Accompanying material to "Model-free inference of direct interactions 
+% from nonlinear collective dynamics".
+%
+% Author: Jose Casadiego
+% Date:   May 2017
+
+close all;
+addpath('Models/','Functions/')
+
+MODEL={'kuramoto1','kuramoto2','michaelis_menten','roessler'};
+BASIS={'polynomial','polynomial_diff','fourier','fourier_diff','power_series','RBF'};
+NAMES={'Polynomial','Polynomial Diff','Fourier','Fourier Diff','Power Series','Radial Basis Function'};
+
+N=25;
+NI=4;
+S=30;
+M=10;
+NODE=15;
+ORDER=6;
+
+simulate(MODEL{2},N,NI,S,M);
+
+% This make take several minutes
+figure('Name',['Reconstruction with different basis for ', MODEL{2}]);
+for i=1:length(BASIS)
+    [list,cost,FPR,TPR,AUC]=reconstruct(MODEL{2},NODE,BASIS{i},ORDER);
+    subplot(2,3,i);
+    plot(cost,'-o','LineWidth',2.5,'Color',[0,0.7,0.9],'MarkerFaceColor',[0,0.7,0.9]);
+    title({['Fitting Costs: ',NAMES{i}],['AUC=',num2str(AUC)]});
+    xlabel('# Inferred Interaction');
+    ylabel('Cost');
+end
+set(gcf,'Position',[0 0 1000 500])
+
+simulate(MODEL{3},N,NI,S,M);
+
+% This make take several minutes
+figure('Name',['Reconstruction with different basis for ', MODEL{3}]);
+for i=1:length(BASIS)
+    [list,cost,FPR,TPR,AUC]=reconstruct(MODEL{3},NODE,BASIS{i},ORDER);
+    subplot(2,3,i);
+    plot(cost,'-o','LineWidth',2.5,'Color',[0,0.7,0.9],'MarkerFaceColor',[0,0.7,0.9]);
+    title({['Fitting Costs: ',NAMES{i}],['AUC=',num2str(AUC)]});
+    xlabel('# Inferred Interactions');
+    ylabel('Cost');
+end
+set(gcf,'Position',[0 0 1000 500])
+
+##### SOURCE END #####
+--></body></html>
