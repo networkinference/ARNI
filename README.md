@@ -8,65 +8,34 @@ codes (including examples) for simulating time series and
 reconstructing the connectivity of different models of network 
 dynamical systems. The codes we provide include:
 
-ARNI_NatComm
-
-├──Data
-
-├──────connectivity.dat
-   
-├──────data.dat
-
-├──────frequencies.dat
-
-├──────ts_param.dat
-
-├──Functions
-
-├──────basis_expansion.m
-
-├──────reconstruct.m
-
-├──────simulate.m
-
-├──────topology.m 
-
-├──Html_Output
-
-├──Models
-
-├──────kuramoto1.m    
-   
-├──────kuramoto2.m 
-   
-├──────michaelis_menten.m   
-   
-├──────roessler.m
-
-├──example1.m 
-
-├──example2.m 
-
-├──example3.m 
-
-├──example4.m 
+    ARNI_MATLAB
+    ├── Data                   
+    ├── Functions              
+    ├── Html_Output            
+    ├── Models                 
+    ├── example1.m                   
+    ├── example2.m
+    ├── example3.m
+    └── example4.m
 
 ### 1.1 Data
 
 The folder Data contains all the necessary information for 
 reconstructing and evaluating the quality of reconstruction of 
-networks from time series. Specifically, connectivity.dat 
-contains the connectivity matrix of the network model simulated. 
-The file data.dat contains all the simulated time series for a 
+networks from time series. 
+
+Specifically, ''connectivity.dat'' contains the connectivity matrix of the network model simulated. 
+The file ''data.dat'' contains all the simulated time series for a 
 specific simulated model. In case of simulating phase-coupled 
 oscillators, frequencies.dat contains the intrinsic frequency of 
-each oscillator. Finally, ts_param.dat indicates how many time 
+each oscillator. Finally, ''ts_param.dat'' indicates how many time 
 series and for how long such were simulated.
 
 ### 1.2 Functions
 
 #### 1.2.1 basis_expansion.m 
 
-basis_expansion.m generates a multidimensional array of basis 
+''basis_expansion.m'' generates a multidimensional array of basis 
 expansions evaluated on all points of a multivariate time series.
 
 ##### Output
@@ -77,7 +46,7 @@ connections.
 
 #### 1.2.2 reconstruct.m
 
-reconstruct.m returns a ranked list of the inferred incoming 
+''reconstruct.m'' returns a ranked list of the inferred incoming 
 connections.
 
 ##### Output
@@ -92,7 +61,7 @@ AUC: Quality of reconstruction measured in AUC scores.
 
 #### 1.2.3 simulate.m
 
-simulate.m generates time series of networks of dynamical systems 
+''simulate.m'' generates time series of networks of dynamical systems 
 for several different intial conditions.
 
 ##### Output
@@ -104,7 +73,7 @@ number and length of time series.
 
 #### 1.2.4 topology.m
 
-topology.m generates connectivity matrices for network 
+''topology.m'' generates connectivity matrices for network 
 simulation.
 
 ##### Output
@@ -127,7 +96,7 @@ This folder contains the files for simulating random ensembles of gene regulator
 
 ## 1.5 Examples
 
-example1.m generates different time series of networks of 
+''example1.m'' generates different time series of networks of 
 dynamical systems starting from different intial conditions and 
 reconstructs the connectivity for a selected unit. Increasing the 
 number of different time series leads to better results.
@@ -139,7 +108,7 @@ of inferred interactions with actual inferred interactions; and,
 (2) Receiver-Operating-Characteristic Curve.
 
 
-example2.m generates different time series for two different 
+''example2.m'' generates different time series for two different 
 dynamical systems under different types of coupling functions, h(x_{j})
  and h(x_{i},x_{j}), starting from different intial conditions 
 and reconstructs the connectivity for a selected unit. Increasing 
@@ -155,7 +124,7 @@ of inferred interactions using different bases for models
 kuramoto2 and michaelis_menten.
 
 
-example3.m generates different time series for kuramoto2 systems 
+''example3.m'' generates different time series for kuramoto2 systems 
 and reconstructs them under radial basis functions of different 
 orders. Greater orders (number of employed basis functions) lead 
 to better results.
@@ -165,7 +134,7 @@ to better results.
 Figures showing the evolution of fitting costs versus the number 
 of inferred interactions using different number of bases.
 
-example4.m compares the quality of reconstruction between short 
+''example4.m'' compares the quality of reconstruction between short 
 and long time series with poor temporal resolution on networks of 
 coupled chaotic roessler systems. Several short time series are 
 preferable over long time series for this type of systems.
