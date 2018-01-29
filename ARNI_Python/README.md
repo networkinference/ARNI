@@ -1,5 +1,5 @@
 # ARNI -- Algorithm for Revealing Network Interactions
-Example codes in Matlab for simulating and reconstructing network dynamical systems.
+Example codes in Python for simulating and reconstructing network dynamical systems.
 
 ## 1 Codes for simulating and reconstructing networks
 
@@ -18,7 +18,7 @@ dynamical systems. The codes we provide include:
     
 ### 1.1 ARNIpy
 
-#### 1.1.1 basis_expansion.m 
+#### 1.1.1 basis_expansion.py 
 
 ''basis_expansion.m'' generates a multidimensional array of basis 
 expansions evaluated on all points of a multivariate time series.
@@ -29,7 +29,7 @@ Multidimensional array containing the evalation of all basis
 functions for all time points and all possible incoming 
 connections.
 
-#### 1.1.2 reconstruct.m
+#### 1.1.2 reconstruct.py
 
 ''reconstruct.m'' returns a ranked list of the inferred incoming 
 connections.
@@ -44,7 +44,7 @@ FPR: False positives rate for the reconstruction.
 TPR: True positives rate for the reconstruction.
 AUC: Quality of reconstruction measured in AUC scores.
 
-#### 1.1.3 simulate.m
+#### 1.1.3 simulate.py
 
 ''simulate.m'' generates time series of networks of dynamical systems 
 for several different intial conditions.
@@ -56,7 +56,7 @@ concatenaded form.
 'Data/ts_param.dat': File containing time series parameters, i.e. 
 number and length of time series.
 
-#### 1.1.4 topology.m
+#### 1.1.4 topology.py
 
 ''topology.m'' generates connectivity matrices for network 
 simulation.
@@ -86,7 +86,7 @@ series and for how long such were simulated.
 
 ## 1.3 Examples
 
-''example1.m'' generates different time series of networks of 
+''example1.py'' generates different time series of networks of 
 dynamical systems starting from different intial conditions and 
 reconstructs the connectivity for a selected unit. Increasing the 
 number of different time series leads to better results.
@@ -98,7 +98,7 @@ of inferred interactions with actual inferred interactions; and,
 (2) Receiver-Operating-Characteristic Curve.
 
 
-''example2.m'' generates different time series for two different 
+''example2.py'' generates different time series for two different 
 dynamical systems under different types of coupling functions, h(x_{j})
  and h(x_{i},x_{j}), starting from different intial conditions 
 and reconstructs the connectivity for a selected unit. Increasing 
@@ -114,7 +114,7 @@ of inferred interactions using different bases for models
 kuramoto2 and michaelis_menten.
 
 
-''example3.m'' generates different time series for kuramoto2 systems 
+''example3.py'' generates different time series for kuramoto2 systems 
 and reconstructs them under radial basis functions of different 
 orders. Greater orders (number of employed basis functions) lead 
 to better results.
@@ -124,7 +124,7 @@ to better results.
 Figures showing the evolution of fitting costs versus the number 
 of inferred interactions using different number of bases.
 
-''example4.m'' compares the quality of reconstruction between short 
+''example4.py'' compares the quality of reconstruction between short 
 and long time series with poor temporal resolution on networks of 
 coupled chaotic roessler systems. Several short time series are 
 preferable over long time series for this type of systems.
