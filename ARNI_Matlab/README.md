@@ -8,7 +8,7 @@ codes (including examples) for simulating time series and
 reconstructing the connectivity of different models of network 
 dynamical systems. The codes we provide include:
 
-    ARNI_MATLAB
+    ARNI_Matlab
     ├── Data                   
     ├── Functions              
     ├── Html_Output            
