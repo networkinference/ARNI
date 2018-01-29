@@ -8,32 +8,17 @@ codes (including examples) for simulating time series and
 reconstructing the connectivity of different models of network 
 dynamical systems. The codes we provide include:
 
-    ARNI_MATLAB
-    ├── Data                   
-    ├── Functions              
-    ├── Html_Output            
-    ├── Models                 
+    ARNI_Python
+    ├── ARNIpy                   
+    ├── Data              
     ├── example1.m                   
     ├── example2.m
     ├── example3.m
     └── example4.m
+    
+### 1.1 ARNIpy
 
-### 1.1 Data
-
-The folder Data contains all the necessary information for 
-reconstructing and evaluating the quality of reconstruction of 
-networks from time series. 
-
-Specifically, ''connectivity.dat'' contains the connectivity matrix of the network model simulated. 
-The file ''data.dat'' contains all the simulated time series for a 
-specific simulated model. In case of simulating phase-coupled 
-oscillators, frequencies.dat contains the intrinsic frequency of 
-each oscillator. Finally, ''ts_param.dat'' indicates how many time 
-series and for how long such were simulated.
-
-### 1.2 Functions
-
-#### 1.2.1 basis_expansion.m 
+#### 1.1.1 basis_expansion.m 
 
 ''basis_expansion.m'' generates a multidimensional array of basis 
 expansions evaluated on all points of a multivariate time series.
@@ -44,7 +29,7 @@ Multidimensional array containing the evalation of all basis
 functions for all time points and all possible incoming 
 connections.
 
-#### 1.2.2 reconstruct.m
+#### 1.1.2 reconstruct.m
 
 ''reconstruct.m'' returns a ranked list of the inferred incoming 
 connections.
@@ -59,7 +44,7 @@ FPR: False positives rate for the reconstruction.
 TPR: True positives rate for the reconstruction.
 AUC: Quality of reconstruction measured in AUC scores.
 
-#### 1.2.3 simulate.m
+#### 1.1.3 simulate.m
 
 ''simulate.m'' generates time series of networks of dynamical systems 
 for several different intial conditions.
@@ -71,7 +56,7 @@ concatenaded form.
 'Data/ts_param.dat': File containing time series parameters, i.e. 
 number and length of time series.
 
-#### 1.2.4 topology.m
+#### 1.1.4 topology.m
 
 ''topology.m'' generates connectivity matrices for network 
 simulation.
@@ -85,16 +70,21 @@ We refer the reader to the headers of each function (and the
 examples described below) for more details about the proper usage 
 of these functions.
 
-## 1.3 Html_Output
+### 1.2 Data
 
-This folder contains the examples and their outputs in HTML 
-format for simple access.
+The folder Data contains all the necessary information for 
+reconstructing and evaluating the quality of reconstruction of 
+networks from time series. 
 
-## 1.4 Models
+Specifically, ''connectivity.dat'' contains the connectivity matrix of the network model simulated. 
+The file ''data.dat'' contains all the simulated time series for a 
+specific simulated model. In case of simulating phase-coupled 
+oscillators, frequencies.dat contains the intrinsic frequency of 
+each oscillator. Finally, ''ts_param.dat'' indicates how many time 
+series and for how long such were simulated.
 
-This folder contains the files for simulating random ensembles of gene regulatory circuits, phase-coupled oscillators with one and two fourier modes and networks of Rössler oscillators. 
 
-## 1.5 Examples
+## 1.3 Examples
 
 ''example1.m'' generates different time series of networks of 
 dynamical systems starting from different intial conditions and 
